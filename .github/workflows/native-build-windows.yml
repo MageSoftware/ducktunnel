@@ -31,11 +31,11 @@ jobs:
 
       - name: Build JAR with Gradle
         run: ./gradlew clean jar
-        working-directory: ./ducktunnel
+        working-directory: /lib
 
       - name: Create Native Image
         run: |
-          JAR_PATH="ducktunnel/build/libs/ducktunnel-1.0.jar"
+          JAR_PATH="lib/build/libs/ducktunnel-1.0.jar"
           EXECUTABLE_NAME="ducktunnel"
           
           # Run native-image
