@@ -33,9 +33,12 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10'
+
+      - name: Setup working dir
+        run: cd lib
+
       - name: Build with Gradle 8.10
         run: gradle build
-        working-directory: /lib
 
       - name: Create Native Image
         run: |
