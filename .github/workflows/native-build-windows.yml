@@ -29,9 +29,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build JAR with Gradle
-        run: ./gradlew clean jar
-        working-directory: /lib
+      - name: Setup Gradle 8.10
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10'
+      - name: Build with Gradle 8.10
+        run: gradle build
 
       - name: Create Native Image
         run: |
