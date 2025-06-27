@@ -38,7 +38,7 @@ jobs:
         run: cd lib
 
       - name: Build with Gradle 8.10
-        run: gradle build
+        run: gradle -p /lib build
 
       - name: Create Native Image
         run: |
