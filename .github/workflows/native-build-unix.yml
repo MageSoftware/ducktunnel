@@ -1,0 +1,51 @@
+name: Compile Kotlin to Native with GraalVM
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21' # Or the Java version compatible with your GraalVM
+          distribution: 'graalvm' # Or 'graalvm-community', 'liberica', 'mandrel'
+          native-image: true # This is typically handled by default now, but can be explicit
+
+      - name: Set up JDK for Kotlin compilation (Optional, but good practice for clarity)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build JAR with Gradle
+        run: ./gradlew clean jar
+        working-directory: ./ducktunnel
+
+      - name: Create Native Image
+        run: |
+          JAR_PATH="ducktunnel/build/libs/ducktunnel-1.0.jar"
+          EXECUTABLE_NAME="ducktunnel"
+          
+          # Run native-image
+          native-image -jar "$JAR_PATH" "$EXECUTABLE_NAME"
+          
+          ls -l "$EXECUTABLE_NAME"
+          ./"$EXECUTABLE_NAME"
+
+      - name: Upload Native Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ducktunnel
+          path: ducktunnel # The name of the executable created
