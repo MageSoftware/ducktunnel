@@ -35,6 +35,7 @@ jobs:
           gradle-version: '8.10'
       - name: Build with Gradle 8.10
         run: gradle build
+        working-directory: /lib
 
       - name: Create Native Image
         run: |
