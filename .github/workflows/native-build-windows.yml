@@ -42,17 +42,8 @@ jobs:
 
       - name: Create Native Image
         run: |
-          JAR_PATH="lib/build/libs/ducktunnel-1.0.jar"
-          EXECUTABLE_NAME="ducktunnel"
+          set JAR_PATH="lib/build/libs/ducktunnel-1.0.jar"
+          set EXECUTABLE_NAME="ducktunnel"
           
           # Run native-image
           native-image -jar "$JAR_PATH" "$EXECUTABLE_NAME"
-          
-          ls -l "$EXECUTABLE_NAME"
-          ./"$EXECUTABLE_NAME"
-
-      - name: Upload Native Executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: ducktunnel
-          path: ducktunnel # The name of the executable created
