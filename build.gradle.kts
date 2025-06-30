@@ -1,13 +1,37 @@
 plugins {
     kotlin("jvm") version "2.1.20"
     application
+    maven-publish
+    java-library
 }
 
 group = "com.duckplay.tunnel"
-version = "1.0"
+version = "0.0.1-beta"
 
 repositories {
     mavenCentral()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.duckplay.tunnel'
+            artifactId = 'tunnel'
+            version = '0.0.1-beta'
+
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/ssimiao/abacatepay-kotlin-sdk")
+            credentials {
+                username = System.getenv("USERNAME")
+                password = System.getenv("TOKEN")
+            }
+        }
+    }
 }
 
 application {
